@@ -16,7 +16,7 @@
 
 Не опубликовано, потому:
 
-- клонируем git clone
+- клонируем git clone https://github.com/Arkadiy2907/googleChromeApp_image_grabber.git
 - в браузере Google Chrome открываем Extensions -> Manage Extensions.
 - включаем Developer mode (правый верхний угол)
 - через кнопку 'load unpacked'(левый верхний угол) указываем путь где находится клонированное расширение
