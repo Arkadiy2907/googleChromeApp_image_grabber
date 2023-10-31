@@ -34,9 +34,7 @@
 
 Картинки под CORS не скачает, будет просто архив без этих рисунков!!!
 
-Делал с целью обучения, на основе статьи https://habr.com/ru/articles/703330/
-
-https://github.com/AndreyGermanov/image_grabber/tree/main
+Делал сам, на основе статьи https://habr.com/ru/articles/703330/
 
 MIT License
 
