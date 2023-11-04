@@ -2,7 +2,7 @@ const grabBtn = document.getElementById('grabBtn');
 grabBtn.addEventListener('click', () => {
   // Получить активную вкладку браузера
   chrome.tabs.query({ active: true }, function (tabs) {
-    var tab = tabs[0];
+    const tab = tabs[0];
     // и если она есть, то выполнить на ней скрипт
     if (tab) {
       execScript(tab);
@@ -56,19 +56,7 @@ function onResult(frames) {
     return;
   }
   // Объединить списки URL из каждого фрейма в один массив
-  const imageUrls = frames
-    .map((frame) => frame.result)
-    .reduce((r1, r2) => r1.concat(r2));
-  // Скопировать в буфер обмена полученный массив
-  // объединив его в строку, используя возврат каретки
-  // как разделитель
-  // window.navigator.clipboard
-  //   .writeText(imageUrls.join("\n"))
-  //   .then(() => {
-  //     // закрыть окно расширения после
-  //     // завершения
-  //     window.close();
-  //   });
+  const imageUrls = frames.flatMap((frame) => frame.result).filter(Boolean);
 
   openImagesPage(imageUrls);
 }
