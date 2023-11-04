@@ -88,7 +88,7 @@ async function createArchive(urls) {
   for (let index in urls) {
     try {
       const url = urls[index];
-      const response = await fetch(url);
+      const response = await fetch(url, { mode: 'no-cors' });
       const blob = await response.blob();
       zip.file(checkAndGetFileName(index, blob), blob);
     } catch (err) {
