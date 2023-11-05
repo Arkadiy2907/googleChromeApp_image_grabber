@@ -1,12 +1,16 @@
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+/**
+ * Listener that receives a message with a list of image
+ * URL's to display from popup.
+ */
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   addImagesToContainer(message);
   sendResponse('OK');
 });
 
 /**
- * Функция, генерирует HTML-разметку
- * списка изображений
- * @param {} urls - Массив путей к изображениям
+ * Function that used to display an UI to display a list
+ * of images
+ * @param {} urls - Array of image URLs
  */
 function addImagesToContainer(urls) {
   if (!urls || !urls.length) {
@@ -17,12 +21,10 @@ function addImagesToContainer(urls) {
 }
 
 /**
- * Функция создает элемент DIV для каждого изображения
- * и добавляет его в родительский DIV.
- * Создаваемый блок содержит само изображение и флажок
- * чтобы его выбрать
- * @param {*} container - родительский DIV
- * @param {*} url - URL изображения
+ * Function dynamically add a DIV with image and checkbox to
+ * select it to the container DIV
+ * @param {*} container - DOM node of a container div
+ * @param {*} url - URL of image
  */
 function addImageNode(container, url) {
   const div = document.createElement('div');
@@ -38,8 +40,8 @@ function addImageNode(container, url) {
 }
 
 /**
- * Обработчик события "onChange" флажка Select All
- * Включает/выключает все флажки картинок
+ * The "Select All" checkbox "onChange" event listener
+ * Used to check/uncheck all image checkboxes
  */
 document.getElementById('selectAll').addEventListener('change', (event) => {
   const items = document.querySelectorAll('.container input');
@@ -49,9 +51,9 @@ document.getElementById('selectAll').addEventListener('change', (event) => {
 });
 
 /**
- * Обработчик события "onClick" кнопки Download.
- * Сжимает все выбранные картинки в ZIP-архив
- * и скачивает его.
+ * The "Download" button "onClick" event listener
+ * Used to compress all selected images to a ZIP-archive
+ * and download this ZIP-archive
  */
 document.getElementById('downloadBtn').addEventListener('click', async () => {
   try {
@@ -64,8 +66,9 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
 });
 
 /**
- * Функция возвращает список URL всех выбранных картинок
- * @returns Array Массив путей к картинкам
+ * Function used to get URLs of all selected image
+ * checkboxes
+ * @returns Array of URL string
  */
 function getSelectedUrls() {
   const urls = Array.from(document.querySelectorAll('.container input'))
@@ -78,24 +81,24 @@ function getSelectedUrls() {
 }
 
 /**
- * Функция загружает картинки из массива "urls"
- * и сжимает их в ZIP-архив
- * @param {} urls - массив путей к картинкам
- * @returns BLOB-объект ZIP-архива
+ * Function used to download all image files, identified
+ * by `urls`, and compress them to a ZIP
+ * @param {} urls - list of URLs of files to download
+ * @returns a BLOB of generated ZIP-archive
  */
 async function createArchive(urls) {
   const zip = new JSZip();
   for (let index in urls) {
     try {
       const url = urls[index];
-      const response = await fetch(url, { mode: 'no-cors' });
+      const response = await fetch(url);
       const blob = await response.blob();
       zip.file(checkAndGetFileName(index, blob), blob);
     } catch (err) {
       console.error(err);
     }
   }
-  return await zip.generateAsync({
+  return zip.generateAsync({
     type: 'blob',
     compression: 'DEFLATE',
     compressionOptions: {
@@ -105,11 +108,12 @@ async function createArchive(urls) {
 }
 
 /**
- * Проверяет переданный объект blob, чтобы он был не пустой
- * картинкой и генерирует для него имя файла
- * @param {} index - Порядковый номер картинки в массиве
- * @param {*} blob - BLOB-объект с данными картинки
- * @returns string Имя файла с расширением
+ * Function used to return a file name for
+ * image blob only if it has a correct image type
+ * and positive size. Otherwise throws an exception.
+ * @param {} index - An index of URL in an input
+ * @param {*} blob - BLOB with a file content
+ * @returns
  */
 function checkAndGetFileName(index, blob) {
   let name = parseInt(index) + 1;
@@ -121,17 +125,17 @@ function checkAndGetFileName(index, blob) {
 }
 
 /**
- * Функция генерирует ссылку на ZIP-архив
- * и автоматически ее нажимает что приводит
- * к скачиванию архива браузером пользователя
- * @param {} archive - BLOB архива для скачивания
+ * Triggers browser "Download file" action
+ * using a content of a file, provided by
+ * "archive" parameter
+ * @param {} archive - BLOB of file to download
  */
 function downloadArchive(archive) {
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(archive);
+  const link = window.document.createElement('a');
+  link.href = window.URL.createObjectURL(archive);
   link.download = 'images.zip';
   document.body.appendChild(link);
   link.click();
-  URL.revokeObjectURL(link.href);
+  window.URL.revokeObjectURL(link.href);
   document.body.removeChild(link);
 }
