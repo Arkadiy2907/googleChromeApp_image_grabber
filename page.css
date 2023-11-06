@@ -1,7 +1,14 @@
+:root {
+  --white: rgb(184, 230, 212);
+  --blue: #087aa0;
+  --green: #10847a;
+  --black: #3a3a3a;
+}
+
 body {
   margin: 0px;
   padding: 0px;
-  background-color: #ffffff;
+  background-color: var(--white);
 }
 
 .header {
@@ -13,56 +20,62 @@ body {
   width: 100%;
   position: fixed;
   padding: 10px;
-  background: linear-gradient(#5bc4bc, #01a9e1);
+  background: linear-gradient(var(--green), var(--blue));
   z-index: 100;
   box-shadow: 0px 5px 5px #00222266;
 }
 
-.header>span {
+.title {
   font-weight: bold;
-  color: black;
+  color: var(--black);
   text-transform: uppercase;
-  color: #ffffff;
-  text-shadow: 3px 3px 3px #000000ff;
+  color: var(--white);
+  text-shadow: 3px 3px 3px var(--black);
   font-size: 24px;
 }
 
-.header>div {
+.header div {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-right: 10px;
+
 }
 
-.header>div>span {
+.select_text {
   font-weight: bold;
-  color: #ffffff;
+  color: var(--white);
   font-size: 16px;
-  text-shadow: 3px 3px 3px #00000088;
+  transition: all 0.4s linear;
 }
 
-.header input {
+.select_text:hover {
+  text-shadow: 3px 3px 3px var(--black);
+}
+
+#selectAll {
   width: 20px;
   height: 20px;
+  cursor: pointer;
 }
 
-.header>button {
+#downloadBtn {
   color: white;
-  background: linear-gradient(#01a9e1, #5bc4bc);
+  background: linear-gradient(var(--blue), var(--green));
   border-width: 0px;
   border-radius: 5px;
   padding: 10px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 2px 2px #00000066;
   margin-right: 20px;
   font-size: 16px;
-  text-shadow: 2px 2px 2px#00000088;
+  text-shadow: 2px 2px 2px var(--black);
+  transition: all 0.4s linear;
 }
 
-.header>button:hover {
-  background: linear-gradient(#5bc4bc, #01a9e1);
-  box-shadow: 2px 2px #00000066;
+#downloadBtn:hover {
+  background: linear-gradient(var(--green), var(--blue));
+  box-shadow: 2px 2px var(--black);
 }
 
 .container {
@@ -85,13 +98,16 @@ body {
   padding: 10px;
   margin: 10px;
   border-radius: 5px;
-  background: linear-gradient(#01a9e1, #5bc4bc);
+  background: linear-gradient(var(--blue), var(--green));
   box-shadow: 5px 5px 5px #00222266;
+  border: 1px solid var(--white);
+  transition: all 0.4s linear;
 }
 
 .imageDiv:hover {
-  background: linear-gradient(#5bc4bc, #01a9e1);
+  background: linear-gradient(var(--green), var(--blue));
   box-shadow: 10px 10px 10px #00222266;
+  cursor: pointer;
 }
 
 .imageDiv img {
@@ -105,4 +121,8 @@ body {
   right: 10px;
   width: 20px;
   height: 20px;
+}
+
+.selected {
+  border: 1px solid #ff0000;
 }
