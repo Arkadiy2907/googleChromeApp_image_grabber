@@ -3,6 +3,7 @@
   --blue: #087aa0;
   --green: #10847a;
   --black: #3a3a3a;
+  --dark: #00222266;
 }
 
 body {
@@ -22,7 +23,7 @@ body {
   padding: 10px;
   background: linear-gradient(var(--green), var(--blue));
   z-index: 100;
-  box-shadow: 0px 5px 5px #00222266;
+  box-shadow: 0px 5px 5px var(--dark);
 }
 
 .title {
@@ -60,7 +61,7 @@ body {
 }
 
 #downloadBtn {
-  color: white;
+  color: #ffffff;
   background: linear-gradient(var(--blue), var(--green));
   border-width: 0px;
   border-radius: 5px;
@@ -99,14 +100,14 @@ body {
   margin: 10px;
   border-radius: 5px;
   background: linear-gradient(var(--blue), var(--green));
-  box-shadow: 5px 5px 5px #00222266;
+  box-shadow: 5px 5px 5px var(--dark);
   border: 1px solid var(--white);
   transition: all 0.4s linear;
 }
 
 .imageDiv:hover {
   background: linear-gradient(var(--green), var(--blue));
-  box-shadow: 10px 10px 10px #00222266;
+  box-shadow: 10px 10px 10px var(--dark);
   cursor: pointer;
 }
 
